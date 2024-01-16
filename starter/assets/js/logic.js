@@ -15,9 +15,8 @@ var feedback = document.querySelector("#feedback");
 //Other variables from question js
 var questionNumber = 0; 
 var choices = questions[questionNumber].choices;
- secondsLeft = 60;
+secondsLeft = 60;
 var totalScore;
-var quesctionCount = 1;
 
 var sourceQuestions = questions;
 
@@ -25,11 +24,8 @@ function startGame() {
   startButton.style.display = "none";
   startScreen.style.display = "none";
   questionSection.style.display = "block";
-  questionNumber = 0;
   timerCountDown();
-
   questionTitle.textContent = sourceQuestions[questionNumber].title;
-  
   questionchoicesbutton();
 }
 
@@ -49,6 +45,7 @@ function questionchoicesbutton() {
     choiceButton.setAttribute("style", "color: white; background-color: black;")
     choiceButton.setAttribute("id", "choice-" + i);
     choiceButton.textContent = sourceQuestions[questionNumber].choices[i];
+    // choiceButton.addEventListener("click", checkAnswers);
     questionChoices.appendChild(choiceButton);
     
   }
@@ -67,10 +64,10 @@ function timerCountDown(){
        if(secondsLeft <= 0)
        {
          clearInterval(timerInterval);
-         timer.textContent = "You run of time";
+         timer.textContent = "You run out of time";
 
          gameOver();
-       }else if (quesctionCount >= questions.length +1){
+       }else if (questionNumber >= questions.length +1){
         clearInterval(timerInterval);
         gameOver();
        }
@@ -96,30 +93,66 @@ function incorrectAnswer(){
 
 }
 
-var buttonsEvent = document.querySelectorAll(".choiceButton");
-
-buttonsEvent.forEach(function(click){
-  click.addEventListener("click",checkAnswers);
-});
 
 // event listeners to check if the answer is correct or not
 
-function checkAnswers(event){
-  event.preventDefault();
-  if(sourceQuestions[questionNumber].answer == event.target.value){
-    correctAnswer();
-    totalScore - totalScore + 1;
-  }else{
-    secondsLeft = secondsLeft - 10;
-    incorrectAnswer();
+
+document.addEventListener("click", function(event){
+  if(event.target.matches('.choiceButton')){
+    event.stopPropagation();
+    event.preventDefault();
+    console.log(event.target.textContent);
+
+    if(event.target.textContent === sourceQuestions[questionNumber].answer){
+      correctAnswer();
+      totalScore = totalScore + 1;
+      secondsLeft = secondsLeft + 10;
+      moveNext();
+    }
+    else{
+      secondsLeft = secondsLeft - 10;
+      incorrectAnswer();
+      moveNext();
+    }
+
+   
+    questionNumber = questionNumber + 1;
   }
+});
 
+function moveNext(){
   if(questionNumber < sourceQuestions.length - 1){
-    showQuestions(questionNumber +1);
+    questionTitle.textContent = questions[questionNumber].title;
+    questionChoices.innerHTML =  " ";
+    questionchoicesbutton();
 
   }else{
+    questionChoices = " ";
     gameOver();
   }
-
-  quesctionCount++;
 }
+
+function gameOver(){
+  console.log("Bye");
+}
+
+// function checkAnswers(event){
+//   event.preventDefault();
+//   console.log(event.target.value);
+//   if(sourceQuestions[questionNumber].answer == event.target.value){
+//     correctAnswer();
+//     totalScore - totalScore + 1;
+//   }else{
+//     secondsLeft = secondsLeft - 10;
+//     incorrectAnswer();
+//   }
+
+//   if(questionNumber < sourceQuestions.length - 1){
+//     questionNumber = questionNumber + 1;
+
+//   }else{
+//     gameOver();
+//   }
+
+//   questionNumber++;
+// }
