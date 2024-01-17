@@ -104,15 +104,27 @@ document.addEventListener("click", function(event){
     console.log(event.target.textContent);
 
     if(event.target.textContent === sourceQuestions[questionNumber].answer){
-      correctAnswer();
-      totalScore = totalScore + 1;
+      questionNumber = questionNumber + 1;
       secondsLeft = secondsLeft + 10;
+      totalScore = totalScore + 1;
       moveNext();
+      
+      // moveNext();
     }
     else{
       secondsLeft = secondsLeft - 10;
-      incorrectAnswer();
-      moveNext();
+      if(questionNumber <= sourceQuestions.length - 1){
+        questionTitle.textContent = questions[questionNumber].title;
+        questionChoices.innerHTML =  " ";
+        questionchoicesbutton();
+        incorrectAnswer();
+    
+      }else{
+        questionChoices = " ";
+        gameOver();
+      }
+     
+      // moveNext();
     }
 
    
@@ -121,10 +133,11 @@ document.addEventListener("click", function(event){
 });
 
 function moveNext(){
-  if(questionNumber < sourceQuestions.length - 1){
+  if(questionNumber <= sourceQuestions.length - 1){
     questionTitle.textContent = questions[questionNumber].title;
     questionChoices.innerHTML =  " ";
     questionchoicesbutton();
+    correctAnswer();
 
   }else{
     questionChoices = " ";
