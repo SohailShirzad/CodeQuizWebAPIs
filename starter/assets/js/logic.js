@@ -16,7 +16,7 @@ var feedback = document.querySelector("#feedback");
 var questionNumber = 0; 
 var choices = questions[questionNumber].choices;
 secondsLeft = 60;
-var totalScore;
+var totalScore = 0;
 
 var sourceQuestions = questions;
 
@@ -65,11 +65,12 @@ function timerCountDown(){
        {
          clearInterval(timerInterval);
          timer.textContent = "You run out of time";
-
          gameOver();
-       }else if (questionNumber >= questions.length +1){
+       }else if (questionNumber >= sourceQuestions.length){
         clearInterval(timerInterval);
         gameOver();
+        
+        questionTitle.textContent = "Your Score is: " + totalScore;
        }
     }
 , 1000);
@@ -106,7 +107,8 @@ document.addEventListener("click", function(event){
     if(event.target.textContent === sourceQuestions[questionNumber].answer){
       questionNumber = questionNumber + 1;
       secondsLeft = secondsLeft + 10;
-      totalScore = totalScore + 1;
+      totalScore++;
+      console.log(totalScore);
       moveNext();
       
       // moveNext();
@@ -114,7 +116,7 @@ document.addEventListener("click", function(event){
     else{
       questionNumber = questionNumber + 1;
       secondsLeft = secondsLeft - 10;
-      totalScore = totalScore - 1;
+      totalScore--;
       if(questionNumber <= sourceQuestions.length - 1){
         questionTitle.textContent = questions[questionNumber].title;
         questionChoices.innerHTML =  " ";
@@ -145,6 +147,7 @@ function moveNext(){
 }
 
 function gameOver(){
+  questionChoices.innerHTML =  " ";
   console.log("Bye");
 }
 

@@ -24,7 +24,7 @@ var questions = [
         answer: '<>'
     },
     {
-        title: 'How to target a html class in css',
+        title: 'How to target a html class in css?',
         choices: ['#class','{class}','.class','(.class)'],
         answer: '.class'
     }
