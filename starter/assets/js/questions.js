@@ -17,6 +17,17 @@ var questions = [
         answer: '<script src="xxx.js"'
 
     },
+
+    {
+        title: 'HTML elements are surrounded by a specific type of brackets, which one?',
+        choices: ['()','{}','><','<>'],
+        answer: '<>'
+    },
+    {
+        title: 'How to target a html class in css',
+        choices: ['#class','{class}','.class','(.class)'],
+        answer: '.class'
+    }
    
 
 ];
