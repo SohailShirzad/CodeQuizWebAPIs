@@ -112,7 +112,9 @@ document.addEventListener("click", function(event){
       // moveNext();
     }
     else{
+      questionNumber = questionNumber + 1;
       secondsLeft = secondsLeft - 10;
+      totalScore = totalScore - 1;
       if(questionNumber <= sourceQuestions.length - 1){
         questionTitle.textContent = questions[questionNumber].title;
         questionChoices.innerHTML =  " ";
@@ -126,9 +128,6 @@ document.addEventListener("click", function(event){
      
       // moveNext();
     }
-
-   
-    questionNumber = questionNumber + 1;
   }
 });
 
